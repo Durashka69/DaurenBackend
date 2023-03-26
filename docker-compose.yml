@@ -1,0 +1,39 @@
+version: '3.9'
+
+
+services:
+  db:
+    container_name: db_tilya
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - my-network
+    env_file:
+      - ./.env
+
+  web:
+    container_name: tilya_web
+    restart: unless-stopped
+    build:
+      context: .
+    volumes:
+        - ./static/:/static
+        - ./media/:/media
+        - ./:/app
+    entrypoint: ./wsgi-entrypoint.sh
+    ports:
+      - "8000:8000"
+    networks:
+      - my-network
+    depends_on:
+      - db
+
+
+volumes:
+  postgres_data:
+  media:
+  static:
+
+networks:
+  my-network:
