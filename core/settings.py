@@ -44,7 +44,8 @@ INSTALLED_APPS = [
 
     #3rd party packages
     'apps.users',
-    'apps.posts'
+    'apps.posts',
+    'apps.mail'
 ]
 
 MIDDLEWARE = [
